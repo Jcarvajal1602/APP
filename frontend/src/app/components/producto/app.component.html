@@ -1,0 +1,46 @@
+<h1>Lista de Productos</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Descripción</th>
+      <th>Completo</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let producto of productos">
+      <td>{{ producto.nombre }}</td>
+      <td>{{ producto.descripcion }}</td>
+      <td>{{ producto.completado ? '✔️' : '⏳' }}</td>
+      <td>
+        <button (click)="edit(producto)">Editar</button>
+        <button (click)="deleteProducto(producto.id!)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Agregar Nuevo Producto</h2>
+<form (ngSubmit)="addProducto()">
+  <input [(ngModel)]="newProducto.nombre" name="nombre" placeholder="Nombre" required />
+  <input [(ngModel)]="newProducto.descripcion" name="descripcion" placeholder="Descripción" />
+  <label>
+    <input type="checkbox" [(ngModel)]="newProducto.completado" name="completado" /> Completado
+  </label>
+  <button type="submit">Agregar</button>
+</form>
+
+<div *ngIf="editProducto">
+  <h2>Editar Producto</h2>
+  <form (ngSubmit)="updateProducto()">
+    <input [(ngModel)]="editProducto.nombre" name="editNombre" placeholder="Nombre" required />
+    <input [(ngModel)]="editProducto.descripcion" name="editDescripcion" placeholder="Descripción" />
+    <label>
+      <input type="checkbox" [(ngModel)]="editProducto.completado" name="editCompletado" /> Completado
+    </label>
+    <button type="submit">Guardar</button>
+    <button type="button" (click)="editProducto = null">Cancelar</button>
+  </form>
+</div>
